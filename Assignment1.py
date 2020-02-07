@@ -10,7 +10,17 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 import scipy.stats as stats
-
+from requests.auth import HTTPDigestAuth
+from pygerrit2 import GerritRestAPI, HTTPBasicAuth
+from IPython.display import clear_output
+import requests
+import pprint
+import urllib
+import backoff
+import os
+import csv
+import pandas
+from datetime import datetime
 
 def plot_bar():
    df_agg[df_agg < 0] = 0
@@ -120,7 +130,6 @@ def _authenticate_with_gerrit():
 
 def _total_churn_per_week_by_developer():
     data = pandas.read_csv("data.csv", sep=';')
-    #data[['date', 'time']] = data['time'].str.split(' ', n=1, expand=True)
 
     data['formatted_date'] = pandas.to_datetime(data['time'])
     data['day_of_year'] = data.formatted_date.apply(lambda x: x.dayofyear)
